@@ -1,5 +1,5 @@
 {
-    "name": "larapay/foundation",
+    "name": "laravelpay/foundation",
     "description": "LaraPay is a payment gateway package for Laravel",
     "type": "library",
     "license": "MIT",
