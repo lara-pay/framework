@@ -54,7 +54,6 @@ public function purchaseMacbook()
     ]);
     
     return $payment->payWith('paypal');
-])
 }
 ```
 
