@@ -100,8 +100,14 @@ class Payment extends Model
         }
     }
 
-    public function generateLinkForGateway(Gateway $gateway)
+    public function generateLinkForGateway($gatewayId)
     {
+        $gateway = Gateway::where('id', $gatewayId)->orWhere('alias', $gatewayId)->first();
+
+        if (!$gateway) {
+            throw new \Exception("Could not locate '{$gatewayId}' by id or alias.");
+        }
+
         $this->update([
             'gateway_id' => $gateway->id,
         ]);
@@ -112,8 +118,14 @@ class Payment extends Model
         return route('larapay.pay', ['token' => $token]);
     }
 
-    public function payWith(Gateway $gateway)
+    public function payWith($gatewayId)
     {
+        $gateway = Gateway::where('id', $gatewayId)->orWhere('alias', $gatewayId)->first();
+
+        if (!$gateway) {
+            throw new \Exception("Could not locate '{$gatewayId}' by id or alias.");
+        }
+
         $this->update([
             'gateway_id' => $gateway->id,
         ]);
