@@ -23,7 +23,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "LaraPay\\Framework\\Providers\\LaraPayServiceProvider"
+                "LaraPay\\Framework\\LaraPayServiceProvider"
             ]
         }
     }
