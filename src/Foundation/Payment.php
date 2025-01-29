@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class Payment extends Model
 {
-    protected $table = 'larapay_payments';
+    protected $table;
 
     protected $fillable = [
         'token',
@@ -20,6 +20,8 @@ class Payment extends Model
         'currency',
         'amount',
         'transaction_id',
+        'success_url',
+        'cancel_url',
         'handler',
         'data',
         'paid_at',
@@ -30,6 +32,20 @@ class Payment extends Model
         'paid_at' => 'datetime',
     ];
 
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->table = config('larapay.tables.payments', 'larapay_payments');
+    }
+
     protected static function boot()
     {
         parent::boot();
@@ -37,6 +53,31 @@ class Payment extends Model
         static::creating(function ($payment) {
             $payment->token = $payment->token ?: Str::random(48);
         });
+    }
+
+    public function getSuccessUrlAttribute($value)
+    {
+        return $value ?: config('larapay.success_url', url('/'));
+    }
+
+    public function getCancelUrlAttribute($value)
+    {
+        return $value ?: config('larapay.cancel_url', url('/'));
+    }
+
+    public function successUrl()
+    {
+        return $this->success_url;
+    }
+
+    public function cancelUrl()
+    {
+        return $this->cancel_url;
+    }
+
+    public function webhookUrl()
+    {
+        return route('larapay.webhook', ['gateway_id' => $this->gateway->gateway()->getWebhookIdentifier(), 'payment_id' => $this->id]);
     }
 
     public function user()
@@ -47,6 +88,11 @@ class Payment extends Model
     public function gateway()
     {
         return $this->belongsTo(Gateway::class);
+    }
+
+    public function total()
+    {
+        return $this->amount;
     }
 
     public function isPaid()

@@ -4,11 +4,12 @@ namespace LaraPay\Framework\Foundation;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
-use LaraPay\Framework\Foundation\GatewayFoundation;
+use LaraPay\Framework\Foundation\Interfaces\GatewayFoundation;
+use Illuminate\Http\Request;
 
 class Gateway extends Model
 {
-    protected $table = 'larapay_gateways';
+    protected $table;
 
     protected $fillable = [
         'alias',
@@ -22,6 +23,13 @@ class Gateway extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->table = config('larapay.tables.gateways', 'larapay_gateways');
+    }
 
     public function payments()
     {
@@ -81,6 +89,11 @@ class Gateway extends Model
         return $this->gateway()->pay($payment);
     }
 
+    public function callback(Request $request)
+    {
+        return $this->gateway()->callback($request);
+    }
+
     public function gateway()
     {
         return (new $this->namespace);
@@ -89,5 +102,15 @@ class Gateway extends Model
     public function getCurrencies()
     {
         return $this->gateway()->getCurrencies();
+    }
+
+    public function config(string $key, $default = null)
+    {
+        // if config is empty, return default value
+        if (empty($this->config)) {
+            return $default;
+        }
+
+        return $this->config[$key] ?? $default;
     }
 }

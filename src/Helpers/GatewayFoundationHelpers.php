@@ -49,4 +49,13 @@ trait GatewayFoundationHelpers
 
         return [];
     }
+
+    public function getWebhookIdentifier(): string
+    {
+        if (property_exists($this, 'listener')) {
+            return $this->listener;
+        }
+
+        return $this->getId();
+    }
 }

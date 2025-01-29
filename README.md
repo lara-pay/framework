@@ -27,7 +27,7 @@ php artisan gateway:install
 You can also install custom gateways using
 ```bash
 # Specify gateway from GitHub
-php artisan gateway:install lara-pay/gateway-example
+php artisan gateway:install laravelpay/gateway-example
 ```
 
 ## Setting up Gateways
@@ -35,7 +35,7 @@ php artisan gateway:install lara-pay/gateway-example
 You can create multiple configurations for each gateway. Below is an example of how you might set up the PayPal gateway.
 
 ```bash
-php artisan gateway:setup
+  php artisan gateway:config
 ```
 
 ## Usage
@@ -54,6 +54,7 @@ public function purchaseMacbook()
     ]);
     
     return $payment->payWith('paypal');
+])
 }
 ```
 
@@ -82,4 +83,4 @@ If you have any questions or issues, please create a new issue in the project re
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/lara-pay/framework/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/laravelpay/framework/blob/main/LICENSE) file for details.

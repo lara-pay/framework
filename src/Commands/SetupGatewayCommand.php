@@ -51,9 +51,11 @@ class SetupGatewayCommand extends Command
 
         $gateway = (new $gateways[$selectedGateway]);
 
+        $gatewaysTable = config('larapay.tables.gateways', 'larapay_gateways');
+
         $alias = text(
             label: 'Enter the alias for the gateway',
-            validate: ['alias' => ['required', 'string', 'unique:larapay_gateways,alias']]
+            validate: ['alias' => ['required', 'string', "unique:{$gatewaysTable},alias"]]
         );
 
         $config = $gateway->getConfig();
@@ -61,10 +63,22 @@ class SetupGatewayCommand extends Command
         $configValues = [];
 
         foreach($config as $key => $value) {
-            $configValues[$key] = text(
-                label: $value['label'],
-                validate: $value['rules']
-            );
+            if($value['type'] == 'select')
+            {
+                $configValues[$key] = select(
+                    label: $value['label'],
+                    options: $value['options'],
+                    validate: $value['rules'],
+                    default: $value['default'] ?? ''
+                );
+            }
+            else {
+                $configValues[$key] = text(
+                    label: $value['label'],
+                    validate: $value['rules'],
+                    default: $value['default'] ?? ''
+                );
+            }
         }
 
         $gateway = Gateway::create([
