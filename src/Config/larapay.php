@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'route_prefix' => 'payments',
+
     'directories' => [
         base_path('app/Gateways'),
     ],

@@ -21,6 +21,9 @@ class LaraPayServiceProvider extends ServiceProvider
 
         // load the migrations
         $this->loadMigrationsFrom(__DIR__ . '/Migrations');
+
+        // load the routes
+        $this->loadRoutesFrom(__DIR__ . '/routes.php');
     }
 
     public function register()

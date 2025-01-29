@@ -3,7 +3,9 @@
 namespace LaraPay\Framework\Foundation;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class Payment extends Model
 {
@@ -28,6 +30,15 @@ class Payment extends Model
         'paid_at' => 'datetime',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($payment) {
+            $payment->token = $payment->token ?: Str::random(48);
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -41,15 +52,6 @@ class Payment extends Model
     public function isPaid()
     {
         return $this->status === 'paid';
-    }
-
-    public function payWith(Gateway $gateway)
-    {
-        if (!$gateway) {
-            throw new \Exception("Gateway with id {$gatewayAlias} not found.");
-        }
-
-        return $gateway->pay($this);
     }
 
     public function completed($transactionId = null, array $paymentData = []): void
@@ -96,5 +98,26 @@ class Payment extends Model
         if ($this->handler && method_exists($this->handler, $method)) {
             $this->handler->{$method}($this);
         }
+    }
+
+    public function generateLinkForGateway(Gateway $gateway)
+    {
+        $this->update([
+            'gateway_id' => $gateway->id,
+        ]);
+
+        $token = Str::random(32);
+        Cache::put($token, $this->id, now()->addMinutes(60));
+
+        return route('larapay.pay', ['token' => $token]);
+    }
+
+    public function payWith(Gateway $gateway)
+    {
+        $this->update([
+            'gateway_id' => $gateway->id,
+        ]);
+
+        return $gateway->pay($this);
     }
 }
