@@ -17,13 +17,13 @@
     },
     "autoload": {
         "psr-4": {
-            "LaraPay\\Foundation\\": "src/"
+            "LaraPay\\Framework\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "LaraPay\\Foundation\\Providers\\LaraPayServiceProvider"
+                "LaraPay\\Framework\\Providers\\LaraPayServiceProvider"
             ]
         }
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPay\Foundation\Providers;
+namespace LaraPay\Framework\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
