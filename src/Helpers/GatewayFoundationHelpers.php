@@ -19,4 +19,19 @@ trait GatewayFoundationHelpers
 
         return Str::slug($this->identifier);
     }
+
+    public function getConfig(): array
+    {
+        // if method called config exists, return the config
+        if (method_exists($this, 'config')) {
+            return $this->config();
+        }
+
+        // if property config exists, return the config
+        if (property_exists($this, 'config')) {
+            return $this->config;
+        }
+
+        return [];
+    }
 }

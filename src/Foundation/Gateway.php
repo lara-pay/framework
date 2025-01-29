@@ -16,10 +16,10 @@ class Gateway extends Model
         'namespace',
         'config',
         'is_active',
+        'tag',
     ];
 
     protected $casts = [
-        'config' => 'array',
         'is_active' => 'boolean',
     ];
 

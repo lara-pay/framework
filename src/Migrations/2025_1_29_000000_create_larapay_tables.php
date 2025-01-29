@@ -13,7 +13,8 @@ return new class extends Migration
             $table->string('alias')->unique();
             $table->string('identifier');
             $table->string('namespace');
-            $table->json('config')->nullable();
+            $table->string('tag')->default('application');
+            $table->text('config')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
