@@ -35,7 +35,7 @@ php artisan gateway:install lara-pay/gateway-example
 You can create multiple configurations for each gateway. Below is an example of how you might set up the PayPal gateway.
 
 ```bash
-  php artisan gateway:config
+php artisan gateway:setup
 ```
 
 ## Usage
