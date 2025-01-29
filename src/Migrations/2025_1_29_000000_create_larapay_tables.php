@@ -22,7 +22,7 @@ return new class extends Migration
             $table->id();
             $table->string('token')->unique();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreign('gateway_id')->nullable()->references('id')->on('larapay_gateways')->onDelete('set null');
+            $table->foreignId('gateway_id')->nullable()->references('id')->on('larapay_gateways')->onDelete('set null');
             $table->string('description')->nullable();
             $table->string('status')->default('unpaid');
             $table->string('currency')->default('USD');

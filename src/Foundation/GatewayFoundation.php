@@ -2,8 +2,11 @@
 
 namespace LaraPay\Framework\Foundation;
 
+use LaraPay\Framework\Helpers\GatewayFoundationHelpers;
+
 abstract class GatewayFoundation
 {
+    use GatewayFoundationHelpers;
     /**
      * Define the gateway identifier. This identifier should be unique. For example,
      * if the gateway name is "PayPal Express", the gateway identifier should be "paypal_express".
@@ -20,11 +23,11 @@ abstract class GatewayFoundation
     protected string $version = '1.0.0';
 
     /**
-     * Define the authors of the gateway.
+     * Define the supported currencies
      *
      * @var array
      */
-    protected array $authors = [];
+    protected array $currencies = [];
 
     public function __construct()
     {

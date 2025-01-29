@@ -13,10 +13,10 @@ trait GatewayFoundationHelpers
      */
     public function getId(): string
     {
-        if (!isset($this->id)) {
+        if (!isset($this->identifier)) {
             throw new \Exception('The gateway identifier is not set.');
         }
 
-        return Str::slug($this->id);
+        return Str::slug($this->identifier);
     }
 }
