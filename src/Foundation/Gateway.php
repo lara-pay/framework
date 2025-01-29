@@ -28,6 +28,20 @@ class Gateway extends Model
         return $this->hasMany(Payment::class, 'gateway_id');
     }
 
+    public function setConfigAttribute($value)
+    {
+        $this->attributes['config'] = encrypt($value);
+    }
+
+    public function getConfigAttribute($value)
+    {
+        if (!$value) {
+            return [];
+        }
+
+        return decrypt($value);
+    }
+
     public static function getInstalledGateways()
     {
         $gateways = [];
@@ -55,5 +69,25 @@ class Gateway extends Model
         }
 
         return $gateways;
+    }
+
+    public function pay(Payment $payment)
+    {
+        $currencies = $this->getCurrencies();
+        if (!empty($currencies) AND !in_array($payment->currency, $currencies)) {
+            throw new \Exception("Gateway '{$this->alias}' does not support currency {$payment->currency}");
+        }
+
+        return $this->gateway()->pay($payment);
+    }
+
+    public function gateway()
+    {
+        return (new $this->namespace);
+    }
+
+    public function getCurrencies()
+    {
+        return $this->gateway()->getCurrencies();
     }
 }

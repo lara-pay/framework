@@ -71,7 +71,7 @@ class SetupGatewayCommand extends Command
             'alias' => $alias,
             'identifier' => $gateway->getId(),
             'namespace' => $gateways[$selectedGateway],
-            'config' => encrypt($configValues),
+            'config' => $configValues,
         ]);
 
         table(

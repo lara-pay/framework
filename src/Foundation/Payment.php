@@ -43,15 +43,13 @@ class Payment extends Model
         return $this->status === 'paid';
     }
 
-    public function payWith($gatewayAlias)
+    public function payWith(Gateway $gateway)
     {
-        $gateway = Gateway::where('alias', $gatewayAlias)->first();
-
         if (!$gateway) {
-            throw new \Exception("Gateway with alias {$gatewayAlias} not found.");
+            throw new \Exception("Gateway with id {$gatewayAlias} not found.");
         }
 
-        return $gateway->gateway()->pay($this);
+        return $gateway->pay($this);
     }
 
     public function completed($transactionId = null, array $paymentData = []): void

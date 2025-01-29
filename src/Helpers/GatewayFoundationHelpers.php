@@ -34,4 +34,19 @@ trait GatewayFoundationHelpers
 
         return [];
     }
+
+    public function getCurrencies(): array
+    {
+        // if method called currencies exists, return the currencies
+        if (method_exists($this, 'currencies')) {
+            return $this->currencies();
+        }
+
+        // if property currencies exists, return the currencies
+        if (property_exists($this, 'currencies')) {
+            return $this->currencies;
+        }
+
+        return [];
+    }
 }
