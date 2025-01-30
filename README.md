@@ -72,6 +72,73 @@ $link = $payment->generateLinkForGateway('paypal'); // http://laravel.app/paymen
 return redirect($link);
 ```
 
+## Executing code when payment is completed
+After a user completes a payment, you may want to execute some code to fulfill the users order. This can be done using Payment Handlers.
+
+1. First create a new php file in app/PaymentHandlers, in our case the file will be called MacbookPaymentHandler.php
+```php
+namespace App\PaymentHandlers;
+
+LaraPay\Framework\Interfaces\PaymentHandler;
+
+class MacbookPaymentHandler extends PaymentHandler
+{
+    public function onPaymentCompleted($payment)
+    {
+        // execute code when payment is completed
+    }
+}
+```
+
+2. Generate the payment and pass the handler class
+
+```php
+use LaraPay\Framework\Payment;
+use App\PaymentHandlers\MacbookPaymentHandler;
+
+$payment = Payment::create([
+    'user_id' => 1,
+    'amount' => 2000,
+    'currency' => 'USD',
+    'description' => 'Macbook Pro',
+    'handler' => MacbookPaymentHandler::class,
+]);
+```
+
+## Payments for users
+You may want to attach specific payments to specific users. You can do so by passing the user id when the payment is created
+
+```php
+use LaraPay\Framework\Payment;
+
+$payment = Payment::create([
+    'user_id' => 1,
+    'amount' => 2000,
+    'currency' => 'USD',
+    'description' => 'Macbook Pro',
+]);
+```
+
+The user can be retrieved later when the payment is completed using `$payment->user`
+
+## Passing custom data
+Custom data can be passed when the payment is being created
+
+```php
+use LaraPay\Framework\Payment;
+
+$payment = Payment::create([
+    'amount' => 2000,
+    'currency' => 'USD',
+    'description' => 'Macbook Pro',
+    'data' => [
+        'order_id' => 1, 
+    ],
+]);
+```
+
+This data can be retrieved using `$payment->data` or to get specific keys `$payment->data('key')`
+
 ## Support
 
 If you have any questions or issues, please create a new issue in the project repository on GitHub.
