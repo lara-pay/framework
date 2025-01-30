@@ -20,7 +20,7 @@ Laravel Pay is a lightweight package for Laravel that allows you to easily integ
 To install the package, use Composer:
 
 ```bash
-composer require laravelpay/framework
+composer require laravelpay/foundation
 ```
 
 ## Installing Gateways
