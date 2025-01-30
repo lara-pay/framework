@@ -5,8 +5,6 @@ namespace LaraPay\Framework;
 use Illuminate\Support\ServiceProvider;
 use LaraPay\Framework\Commands\SetupGatewayCommand;
 use LaraPay\Framework\Commands\InstallGatewayCommand;
-
-
 class LaraPayServiceProvider extends ServiceProvider
 {
     public function boot()

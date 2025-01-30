@@ -4,9 +4,9 @@ namespace LaraPay\Framework\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use LaraPay\Framework\Foundation\Payment;
-use LaraPay\Framework\Foundation\Gateway;
 use Illuminate\Support\Facades\Cache;
+use LaraPay\Framework\Payment;
+use LaraPay\Framework\Gateway;
 
 class PaymentController extends Controller
 {

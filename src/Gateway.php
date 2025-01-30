@@ -1,10 +1,10 @@
 <?php
 
-namespace LaraPay\Framework\Foundation;
+namespace LaraPay\Framework;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
-use LaraPay\Framework\Foundation\Interfaces\GatewayFoundation;
+use LaraPay\Framework\Interfaces\GatewayFoundation;
 use Illuminate\Http\Request;
 
 class Gateway extends Model

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPay\Framework\Foundation\Interfaces;
+namespace LaraPay\Framework\Interfaces;
 
 use LaraPay\Framework\Helpers\GatewayFoundationHelpers;
 use Illuminate\Http\Request;

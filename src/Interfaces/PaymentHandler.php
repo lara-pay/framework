@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPay\Framework\Foundation\Interfaces;
+namespace LaraPay\Framework\Interfaces;
 
 abstract class PaymentHandler
 {

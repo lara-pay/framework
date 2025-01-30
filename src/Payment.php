@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPay\Framework\Foundation;
+namespace LaraPay\Framework;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
