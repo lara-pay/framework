@@ -31,13 +31,6 @@ class Payment extends Model
         'paid_at' => 'datetime',
     ];
 
-    /**
-     * The model's default values for attributes.
-     *
-     * @var array
-     */
-    protected $attributes = [];
-
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
