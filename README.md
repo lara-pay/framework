@@ -17,12 +17,13 @@ composer require laravelpay/framework
 
 ## Installing Gateways
 
-Laravel Pay allows you to install gateways based on your needs. Below is an example of how you might install the PayPal gateway.
+Laravel Pay allows you to install gateways based on your needs. The command below allows you to install one of our default gateways.
 
 ```bash
-# Install one of the default gateways
 php artisan gateway:install
 ```
+
+To install custom gateways, you may pass it in the argument and the GitHub owner/repo i.e `php artisan gateway:install laravelpay/gateway-paypal-ipn`
 
 ## Setting up Gateways
 
