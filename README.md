@@ -24,18 +24,12 @@ Laravel Pay allows you to install gateways based on your needs. Below is an exam
 php artisan gateway:install
 ```
 
-You can also install custom gateways using
-```bash
-# Specify gateway from GitHub
-php artisan gateway:install laravelpay/gateway-example
-```
-
 ## Setting up Gateways
 
 You can create multiple configurations for each gateway. Below is an example of how you might set up the PayPal gateway.
 
 ```bash
-  php artisan gateway:config
+  php artisan gateway:setup
 ```
 
 ## Usage
