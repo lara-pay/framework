@@ -7,6 +7,14 @@ Laravel Pay is a lightweight package for Laravel that allows you to easily integ
 - PHP 8.2 or higher
 - Laravel 11.0 or higher
 
+## Supported Gateways
+
+| Gateway | Install Command |
+| ------------- | ------------- |
+| [PayPal IPN](https://github.com/laravelpay/gateway-paypal-ipn) | php artisan gateway:install laravelpay/gateway-paypal-ipn |
+| [Stripe](https://github.com/laravelpay/gateway-stripe) | php artisan gateway:install laravelpay/gateway-stripe |
+| [Tebex](https://github.com/laravelpay/gateway-tebex) | php artisan gateway:install laravelpay/gateway-tebex |
+
 ## Installation
 
 To install the package, use Composer:
