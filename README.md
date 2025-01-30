@@ -43,7 +43,7 @@ You can create multiple configurations for each gateway. Below is an example of 
 Below is an example of how you might use the package in your Laravel application.
 
 ```php
-use LaraPay\Framework\Foundation\Payment;
+use LaraPay\Framework\Payment;
 
 public function purchaseMacbook()
 {
@@ -63,7 +63,7 @@ In the payWith() method, pass the id or alias of the gateway.
 ## Creating temporary payment links
 
 ```php
-use LaraPay\Framework\Foundation\Payment;
+use LaraPay\Framework\Payment;
 
 $payment = Payment::create([
     'amount' => 2000,
