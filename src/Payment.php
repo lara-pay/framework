@@ -12,7 +12,6 @@ class Payment extends Model
     protected $table;
 
     protected $fillable = [
-        'token',
         'user_id',
         'gateway_id',
         'description',
@@ -49,10 +48,6 @@ class Payment extends Model
     protected static function boot()
     {
         parent::boot();
-
-        static::creating(function ($payment) {
-            $payment->token = $payment->token ?: Str::random(48);
-        });
     }
 
     public function getSuccessUrlAttribute($value)
