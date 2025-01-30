@@ -55,6 +55,7 @@ public function purchaseMacbook()
 In the payWith() method, pass the id or alias of the gateway.
 
 ## Creating temporary payment links
+This package comes with a built-in method that allows you to generate temporary links that redirect the user to make the payment.
 
 ```php
 use LaraPay\Framework\Payment;
