@@ -86,12 +86,20 @@ class Gateway extends Model
             throw new \Exception("Gateway '{$this->alias}' does not support currency {$payment->currency}");
         }
 
-        return $this->gateway()->pay($payment);
+        try {
+            return $this->gateway()->pay($payment);
+        } catch (\Exception $error) {
+            return response()->json(['error' => $error->getMessage(),], 500);
+        }
     }
 
     public function callback(Request $request)
     {
-        return $this->gateway()->callback($request);
+        try {
+            return $this->gateway()->callback($request);
+        } catch(\Exception $error) {
+            return response()->json(['error' => $error->getMessage(),], 500);
+        }
     }
 
     public function gateway()

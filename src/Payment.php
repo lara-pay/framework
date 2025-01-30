@@ -80,7 +80,7 @@ class Payment extends Model
 
     public function total()
     {
-        return $this->amount;
+        return number_format($this->amount, 2);
     }
 
     public function isPaid()
@@ -90,6 +90,10 @@ class Payment extends Model
 
     public function completed($transactionId = null, array $paymentData = []): void
     {
+        if($this->isPaid()) {
+            return;
+        }
+
         $this->callHandler('onPaymentCompleted');
 
         $this->update([
@@ -99,31 +103,12 @@ class Payment extends Model
             'paid_at' => now(),
         ]);
     }
-
-    public function declined(): void
-    {
-        $this->callHandler('onPaymentDeclined');
-
-        $this->update([
-            'status' => 'declined',
-        ]);
-    }
-
     public function refunded(): void
     {
         $this->callHandler('onPaymentRefunded');
 
         $this->update([
             'status' => 'refunded',
-        ]);
-    }
-
-    public function disputed(): void
-    {
-        $this->callHandler('onPaymentDisputed');
-
-        $this->update([
-            'status' => 'disputed',
         ]);
     }
 
@@ -165,5 +150,16 @@ class Payment extends Model
         ]);
 
         return $gateway->pay($this);
+    }
+
+    public function data(string $key, $default = null)
+    {
+        return $this->data[$key] ?? $default;
+    }
+
+    public function addData(string $key, $value)
+    {
+        $this->data[$key] = $value;
+        $this->save();
     }
 }
