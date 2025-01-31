@@ -30,10 +30,4 @@ abstract class GatewayFoundation
      * @var array
      */
     protected array $currencies = [];
-
-    public function __construct() {}
-
-    abstract public function pay($payment);
-
-    abstract public function callback(Request $request);
 }
