@@ -3,11 +3,12 @@
 namespace LaraPay\Framework\Interfaces;
 
 use LaraPay\Framework\Helpers\GatewayFoundationHelper;
+use LaraPay\Framework\Helpers\SubscriptionGatewayHelper;
 use Illuminate\Http\Request;
 
-abstract class GatewayFoundation
+abstract class SubscriptionGateway
 {
-    use GatewayFoundationHelper;
+    use GatewayFoundationHelper, SubscriptionGatewayHelper;
 
     /**
      * Define the gateway identifier. This identifier should be unique. For example,
@@ -33,7 +34,9 @@ abstract class GatewayFoundation
 
     public function __construct() {}
 
-    abstract public function pay($payment);
+    abstract public function subscribe($subscription);
 
     abstract public function callback(Request $request);
+
+    abstract public function check($subscription): bool;
 }

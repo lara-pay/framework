@@ -4,7 +4,7 @@ namespace LaraPay\Framework\Helpers;
 
 use Illuminate\Support\Str;
 
-trait GatewayFoundationHelpers
+trait GatewayFoundationHelper
 {
     /**
      * Get identifier of the gateway.

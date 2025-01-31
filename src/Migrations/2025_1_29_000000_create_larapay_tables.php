@@ -10,10 +10,11 @@ return new class extends Migration
     {
         Schema::create(config('larapay.tables.gateways', 'larapay_gateways'), function (Blueprint $table) {
             $table->id();
+            $table->string('tag')->default('application');
             $table->string('alias')->unique();
             $table->string('identifier');
             $table->string('namespace');
-            $table->string('tag')->default('application');
+            $this->enum('type', ['single', 'subscription'])->default('subscription');
             $table->text('config')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
@@ -23,16 +24,40 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('gateway_id')->nullable()->references('id')->on(config('larapay.tables.gateways', 'larapay_gateways'))->onDelete('set null');
-            $table->string('description')->nullable();
+            $table->string('transaction_id')->nullable();
+            $table->string('tag')->default('application');
             $table->string('status')->default('unpaid');
+            $table->string('description');
             $table->string('currency')->default('USD');
             $table->decimal('amount', 10, 2)->default(0);
-            $table->string('transaction_id')->nullable();
             $table->string('success_url')->nullable();
             $table->string('cancel_url')->nullable();
             $table->string('handler')->nullable();
             $table->json('data')->nullable();
+            $table->json('gateway_data')->nullable();
             $table->timestamp('paid_at')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create(config('larapay.tables.subscriptions', 'larapay_subscriptions'), function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('gateway_id')->nullable()->references('id')->on(config('larapay.tables.gateways', 'larapay_gateways'))->onDelete('set null');
+            $table->string('subscription_id')->nullable();
+            $table->string('tag')->default('application');
+            $table->string('status')->default('inactive');
+            $table->string('name');
+            $table->string('currency')->default('USD');
+            $table->decimal('amount', 10, 2)->default(0);
+            $table->integer('frequency')->default(30); // The frequency of the subscription in days
+            $table->integer('grace_period')->default(3); // The grace period after the due date in days
+            $table->string('success_url')->nullable();
+            $table->string('cancel_url')->nullable();
+            $table->string('handler')->nullable();
+            $table->json('data')->nullable();
+            $table->json('gateway_data')->nullable();
+            $table->timestamp('paid_at')->nullable();
+            $table->timestamp('expires_at')->nullable();
             $table->timestamps();
         });
     }
@@ -41,6 +66,6 @@ return new class extends Migration
     {
         Schema::dropIfExists(config('larapay.tables.gateways', 'larapay_gateways'));
         Schema::dropIfExists(config('larapay.tables.payments', 'larapay_payments'));
-
+        Schema::dropIfExists(config('larapay.tables.subscriptions', 'larapay_subscriptions'));
     }
 };

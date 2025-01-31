@@ -14,6 +14,7 @@ class Payment extends Model
     protected $fillable = [
         'user_id',
         'gateway_id',
+        'tag',
         'description',
         'status',
         'currency',
@@ -23,11 +24,13 @@ class Payment extends Model
         'cancel_url',
         'handler',
         'data',
+        'gateway_data',
         'paid_at',
     ];
 
     protected $casts = [
         'data' => 'array',
+        'gateway_data' => 'array',
         'paid_at' => 'datetime',
     ];
 
@@ -139,6 +142,16 @@ class Payment extends Model
 
     public function payWith($gatewayId)
     {
+        if($this->isPaid()) {
+            throw new \Exception('This payment has already been paid.');
+        }
+
+        // if payment price is zero, mark it as paid
+        if($this->amount == 0) {
+            $this->completed();
+            return;
+        }
+
         $gateway = Gateway::where('id', $gatewayId)->orWhere('alias', $gatewayId)->first();
 
         if (!$gateway) {

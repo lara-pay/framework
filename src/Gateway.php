@@ -14,6 +14,7 @@ class Gateway extends Model
     protected $fillable = [
         'alias',
         'identifier',
+        'type',
         'namespace',
         'config',
         'is_active',
