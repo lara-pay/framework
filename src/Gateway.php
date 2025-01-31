@@ -80,7 +80,7 @@ class Gateway extends Model
         return $gateways;
     }
 
-    public function pay(Payment $payment)
+    public function pay($payment)
     {
         $currencies = $this->getCurrencies();
         if (!empty($currencies) AND !in_array($payment->currency, $currencies)) {
@@ -89,6 +89,17 @@ class Gateway extends Model
 
         try {
             return $this->gateway()->pay($payment);
+        } catch (\Exception $error) {
+            return response()->json(['error' => $error->getMessage(),], 500);
+        }
+    }
+
+    public function subscribe($subscription)
+    {
+        return $this->gateway()->subscribe($subscription);
+
+        try {
+            return $this->gateway()->subscribe($subscription);
         } catch (\Exception $error) {
             return response()->json(['error' => $error->getMessage(),], 500);
         }

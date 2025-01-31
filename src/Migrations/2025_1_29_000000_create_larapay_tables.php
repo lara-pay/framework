@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('alias')->unique();
             $table->string('identifier');
             $table->string('namespace');
-            $this->enum('type', ['single', 'subscription'])->default('subscription');
+            $table->enum('type', ['single', 'subscription'])->default('subscription');
             $table->text('config')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();

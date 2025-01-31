@@ -30,4 +30,6 @@ abstract class GatewayFoundation
      * @var array
      */
     protected array $currencies = [];
+
+    public function __construct() {}
 }

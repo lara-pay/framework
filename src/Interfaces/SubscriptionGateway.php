@@ -18,5 +18,5 @@ abstract class SubscriptionGateway extends GatewayFoundation
 
     abstract public function callback(Request $request);
 
-    abstract public function check($subscription): bool;
+    abstract public function checkSubscription($subscription): bool;
 }
