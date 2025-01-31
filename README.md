@@ -159,14 +159,16 @@ This package includes support for some subscription based gateways. This system 
 ```php
 use LaraPay\Framework\Subscription;
 
-$subscription = Subscription::create([
-    'Basic Plan',
-    'amount' => 2000,
-    'currency' => 'USD',
-    'frequency' => 30, // The frequency (in days) on which the subscription will be charged. 7 is weekly, 30 monthly, 365 yearly 
-]);
-
-return $subscription->subscribeWith('paypal');
+Route::get('/plans/basic/subscribe', function () {
+    $subscription = Subscription::create([
+        'Basic Plan',
+        'amount' => 2000,
+        'currency' => 'USD',
+        'frequency' => 30, // The frequency (in days) on which the subscription will be charged. 7 is weekly, 30 monthly, 365 yearly 
+    ]);
+    
+    return $subscription->subscribeWith('paypal');
+}
 ```
 
 This data can be retrieved using `$payment->data` or to get specific keys `$payment->data('key')`
