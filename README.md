@@ -161,7 +161,7 @@ use LaraPay\Framework\Subscription;
 
 Route::get('/plans/basic/subscribe', function () {
     $subscription = Subscription::create([
-        'Basic Plan',
+        'name' => 'Basic Plan',
         'amount' => 2000,
         'currency' => 'USD',
         'frequency' => 30, // The frequency (in days) on which the subscription will be charged. 7 is weekly, 30 monthly, 365 yearly 
