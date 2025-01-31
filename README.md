@@ -19,6 +19,12 @@ Laravel Pay is a lightweight package for Laravel that allows you to easily integ
 | [BitPave](https://github.com/laravelpay/gateway-bitpave) | php artisan gateway:install laravelpay/gateway-bitpave |
 | [PayByLink](https://github.com/laravelpay/gateway-bitpave) | php artisan gateway:install laravelpay/gateway-paybylink |
 
+## Subscription Gateways
+
+| Gateway | Install Command |
+| ------------- | ------------- |
+| [PayPal Subscriptions](https://github.com/laravelpay/subscriptions-paypal) | php artisan gateway:install laravelpay/subscriptions-paypal |
+
 ## Installation
 To install the package, use Composer:
 
