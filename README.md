@@ -57,8 +57,7 @@ Below is an example of how you might use the package in your Laravel application
 ```php
 use LaraPay\Framework\Payment;
 
-public function purchaseMacbook()
-{
+Route::get('/macbook/purchase', function () {
     $payment = Payment::create([
         'amount' => 2000,
         'currency' => 'USD',
