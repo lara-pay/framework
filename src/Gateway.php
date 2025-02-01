@@ -107,6 +107,11 @@ class Gateway extends Model
 
     public function callback(Request $request)
     {
+        // check if callback() method exists in the gateway
+        if (!method_exists($this->gateway(), 'callback')) {
+            throw new \Exception("Gateway '{$this->alias}' does not support callbacks.");
+        }
+
         try {
             return $this->gateway()->callback($request);
         } catch(\Exception $error) {
@@ -114,6 +119,19 @@ class Gateway extends Model
         }
     }
 
+    public function webhook(Request $request)
+    {
+        // check if webhook() method exists in the gateway
+        if (!method_exists($this->gateway(), 'webhook')) {
+            throw new \Exception("Gateway '{$this->alias}' does not support webhooks.");
+        }
+
+        try {
+            return $this->gateway()->webhook($request);
+        } catch(\Exception $error) {
+            return response()->json(['error' => $error->getMessage(),], 500);
+        }
+    }
     public function gateway()
     {
         return (new $this->namespace);

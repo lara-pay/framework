@@ -71,6 +71,11 @@ class Payment extends Model
         return route('larapay.webhook', ['gateway_id' => $this->gateway->gateway()->getWebhookIdentifier(), 'payment_id' => $this->id]);
     }
 
+    public function callbackUrl()
+    {
+        return route('larapay.callback', ['gateway_id' => $this->gateway->gateway()->getCallbackIdentifier(), 'payment_id' => $this->id]);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

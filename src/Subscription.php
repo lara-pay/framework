@@ -67,12 +67,15 @@ class Subscription extends Model
     {
         return $this->cancel_url;
     }
-
     public function webhookUrl()
     {
         return route('larapay.webhook', ['gateway_id' => $this->gateway->gateway()->getWebhookIdentifier(), 'subscription_id  ' => $this->id]);
     }
 
+    public function callbackUrl()
+    {
+        return route('larapay.callback', ['gateway_id' => $this->gateway->gateway()->getWebhookIdentifier(), 'subscription_id' => $this->id]);
+    }
     public function subscribeWith($gatewayId)
     {
         if($this->isActive()) {

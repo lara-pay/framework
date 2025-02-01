@@ -19,10 +19,17 @@ class PaymentController extends Controller
         return $payment->payWith($payment->gateway->id);
     }
 
-    public function listener(Request $request, $gatewayId)
+    public function callback(Request $request, $gatewayId)
     {
         $gateway = Gateway::where('identifier', $gatewayId)->firstOrFail();
 
         return $gateway->callback($request);
+    }
+
+    public function webhook(Request $request, $gatewayId)
+    {
+        $gateway = Gateway::where('identifier', $gatewayId)->firstOrFail();
+
+        return $gateway->webhook($request);
     }
 }
