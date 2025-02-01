@@ -112,8 +112,6 @@ class Subscription extends Model
             return;
         }
 
-        $this->callHandler('onSubscriptionActivated');
-
         $this->update([
             'status' => 'active',
             'subscription_id' => $subscriptionId,
@@ -121,6 +119,12 @@ class Subscription extends Model
             'paid_at' => now(),
             'expires_at' => now()->addDays($this->frequency),
         ]);
+
+        try {
+            $this->callHandler('onSubscriptionActivated');
+        } catch (\Exception $e) {
+            // do nothing
+        }
     }
 
     public function callHandler($method)

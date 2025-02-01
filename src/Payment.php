@@ -102,22 +102,30 @@ class Payment extends Model
             return;
         }
 
-        $this->callHandler('onPaymentCompleted');
-
         $this->update([
             'status' => 'paid',
             'transaction_id' => $transactionId,
             'data' => $paymentData,
             'paid_at' => now(),
         ]);
+
+        try {
+            $this->callHandler('onPaymentCompleted');
+        } catch (\Exception $e) {
+            // do nothing
+        }
     }
     public function refunded(): void
     {
-        $this->callHandler('onPaymentRefunded');
-
         $this->update([
             'status' => 'refunded',
         ]);
+
+        try {
+            $this->callHandler('onPaymentRefunded');
+        } catch (\Exception $e) {
+            // do nothing
+        }
     }
 
     public function callHandler($method)
