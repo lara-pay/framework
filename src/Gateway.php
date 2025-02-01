@@ -109,7 +109,7 @@ class Gateway extends Model
     {
         // check if callback() method exists in the gateway
         if (!method_exists($this->gateway(), 'callback')) {
-            throw new \Exception("Gateway '{$this->alias}' does not support callbacks.");
+            return response()->json(['error' => "Gateway '{$this->alias}' does not support callbacks.",], 500);
         }
 
         try {

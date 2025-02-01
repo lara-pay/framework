@@ -4,12 +4,14 @@ namespace LaraPay\Framework;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Subscription extends Model
 {
     protected $table;
 
     protected $fillable = [
+        'token',
         'user_id',
         'gateway_id',
         'subscription_id',
@@ -46,6 +48,10 @@ class Subscription extends Model
     protected static function boot()
     {
         parent::boot();
+
+        static::creating(function ($subscription) {
+            $subscription->token = Str::random(20);
+        });
     }
 
     public function getSuccessUrlAttribute($value)
