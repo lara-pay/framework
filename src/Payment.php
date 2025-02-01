@@ -71,15 +71,24 @@ class Payment extends Model
         return $this->cancel_url;
     }
 
-    public function webhookUrl()
+    public function webhookUrl(array $params = [])
     {
-        return route('larapay.webhook', ['gateway_id' => $this->gateway->gateway()->getWebhookIdentifier(), 'payment_id' => $this->id]);
+        $routeParams = array_merge($params, [
+            'gateway_id' => $this->gateway->gateway()->getWebhookIdentifier(),
+            'payment_token' => $this->token,
+        ]);
+
+        return route('larapay.webhook', $routeParams);
     }
 
-    public function callbackUrl()
+    public function callbackUrl(array $params = [])
     {
-        return route('larapay.callback', ['gateway_id' => $this->gateway->gateway()->getCallbackIdentifier(), 'payment_id' => $this->id]);
-    }
+        $routeParams = array_merge($params, [
+            'gateway_id' => $this->gateway->gateway()->getWebhookIdentifier(),
+            'payment_token' => $this->token,
+        ]);
+
+        return route('larapay.callback', $routeParams);    }
 
     public function user()
     {
