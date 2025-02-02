@@ -7,58 +7,44 @@ use LaraPay\Framework\Gateway;
 
 use function Laravel\Prompts\{select, text, table};
 
-class SetupGatewayCommand extends Command
+class UpdateGatewayCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'gateway:setup {gateway?}';
+    protected $signature = 'gateway:update {gateway?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Setup a gateway';
+    protected $description = 'Update a gateway';
 
     /**
      * Execute the console command.
      */
     public function handle(): void
     {
-        $gateways = Gateway::getInstalledGateways();
+        $gateway = Gateway::where('id', $this->argument('gateway'))->orWhere('alias', $this->argument('gateway'))->first();
 
-        if(empty($gateways)) {
-            $this->error('No gateways installed');
+        if(!$gateway) {
+            $this->error("Gateway {$this->argument('gateway')} by alias or ID not found");
             return;
         }
-
-        if($this->argument('gateway')) {
-            $selectedGateway = $this->argument('gateway');
-        } else {
-            $selectedGateway = select(
-                label: 'Select the gateway you want to setup',
-                options: array_keys($gateways)
-            );
-        }
-
-        if(!array_key_exists($selectedGateway, $gateways)) {
-            $this->error("{$selectedGateway} is not installed");
-            return;
-        }
-
-        $gateway = (new $gateways[$selectedGateway]);
 
         $gatewaysTable = config('larapay.tables.gateways', 'larapay_gateways');
 
         $alias = text(
             label: 'Enter the alias for the gateway',
-            validate: ['alias' => ['required', 'string', "unique:{$gatewaysTable},alias"]]
+            validate: ['alias' => ['required', 'string', "unique:{$gatewaysTable},alias,{$gateway->id}"]],
+            default: $gateway->alias
         );
 
-        $config = $gateway->getConfig();
+        $gatewayInstance = (new $gateway->namespace);
+        $config = $gatewayInstance->getConfig();
 
         $configValues = [];
 
@@ -83,11 +69,9 @@ class SetupGatewayCommand extends Command
             }
         }
 
-        $gateway = Gateway::create([
+        $gateway->update([
             'alias' => $alias,
-            'identifier' => $gateway->getId(),
-            'namespace' => $gateways[$selectedGateway],
-            'config' => $configValues,
+            'config' => $configValues
         ]);
 
         table(

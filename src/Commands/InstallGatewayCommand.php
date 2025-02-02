@@ -60,6 +60,8 @@ class InstallGatewayCommand extends Command
             message: 'Installing gateway...',
             callback: fn () => $this->install($githubUrl),
         );
+
+        info('Gateway has been installed successfully.');
     }
 
     /**
@@ -89,11 +91,6 @@ class InstallGatewayCommand extends Command
 
         // Cleanup
         unlink($zipPath);
-
-        // ask if the user wants to setup the gateway
-        if($this->confirm('Do you want to setup the gateway?', false)) {
-            $this->call('gateway:setup');
-        }
     }
 
     /**

@@ -5,13 +5,18 @@ namespace LaraPay\Framework;
 use Illuminate\Support\ServiceProvider;
 use LaraPay\Framework\Commands\SetupGatewayCommand;
 use LaraPay\Framework\Commands\InstallGatewayCommand;
+use LaraPay\Framework\Commands\UpdateGatewayCommand;
+use LaraPay\Framework\Commands\ListGatewayCommand;
+
 class LaraPayServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         $this->commands([
             SetupGatewayCommand::class,
-            InstallGatewayCommand::class
+            InstallGatewayCommand::class,
+            UpdateGatewayCommand::class,
+            ListGatewayCommand::class,
         ]);
 
         // load the config file
