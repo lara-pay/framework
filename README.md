@@ -24,6 +24,7 @@ Laravel Pay is a lightweight package for Laravel that allows you to easily integ
 | Gateway | Install Command |
 | ------------- | ------------- |
 | [PayPal Subscriptions](https://github.com/laravelpay/subscriptions-paypal) | php artisan gateway:install laravelpay/subscriptions-paypal |
+| [Stripe Subscriptions](https://github.com/laravelpay/subscriptions-stripe) | php artisan gateway:install laravelpay/subscriptions-stripe |
 
 ## Installation
 To install the package, use Composer:
