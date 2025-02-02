@@ -154,6 +154,20 @@ $payment = Payment::create([
 ]);
 ```
 
+## Custom success and cancel urls
+Define the URL where the user should be redirected to in the event that the payment gets cancelled or is successfully completed.
+```php
+use LaraPay\Framework\Payment;
+
+$payment = Payment::create([
+    'amount' => 2000,
+    'currency' => 'USD',
+    'description' => 'Macbook Pro',
+    'success_url' => route('your-success-route'),
+    'cancel_url' => route('your-cancel-route'),
+]);
+```
+
 ## Subscriptions
 This package includes support for some subscription based gateways. This system works similarly to normal payments.
 
