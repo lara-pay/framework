@@ -13,6 +13,7 @@ class LaraPayServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
+            __DIR__.'/../assets/larapay.php' => config_path('larapay.php'),
             __DIR__.'/../assets/Gateway.php' => app_path('Models/Gateway.php'),
             __DIR__.'/../assets/Payment.php' => app_path('Models/Payment.php'),
             __DIR__.'/../assets/Subscription.php' => app_path('Models/Subscription.php'),
@@ -25,10 +26,6 @@ class LaraPayServiceProvider extends ServiceProvider
             UpdateGatewayCommand::class,
             ListGatewayCommand::class,
         ]);
-
-        // load the config file
-        $this->mergeConfigFrom(__DIR__ . '/Config/larapay.php', 'larapay');
-
 
         // load the routes
         $this->loadRoutesFrom(__DIR__ . '/routes.php');

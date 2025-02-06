@@ -4,7 +4,7 @@ return [
     'route_prefix' => 'payments',
 
     'directories' => [
-        base_path('app/Gateways'),
+        'App\\Gateways' => base_path('app/Gateways'),
     ],
 
     'suggested_gateways' => [

@@ -31,24 +31,26 @@ trait GatewayFunctions
     public static function getInstalledGateways()
     {
         $gateways = [];
-        $basePath = app_path('Gateways');
+        $paths = config('larapay.directories', ['App\\Gateways' => app_path('Gateways')]);
 
         // Get all directories inside app/Gateways
-        $directories = File::directories($basePath);
+        foreach($paths as $pathNamespace => $path) {
+            $directories = File::directories($path);
 
-        foreach ($directories as $directory) {
-            $gatewayFile = $directory . '/Gateway.php';
+            foreach ($directories as $directory) {
+                $gatewayFile = $directory . '/Gateway.php';
 
-            if (File::exists($gatewayFile)) {
-                // Extract class name from directory name
-                $gatewayName = basename($directory);
-                $class = "App\\Gateways\\$gatewayName\\Gateway";
+                if (File::exists($gatewayFile)) {
+                    // Extract class name from directory name
+                    $gatewayName = basename($directory);
+                    $class = "{$pathNamespace}\\$gatewayName\\Gateway";
 
-                if (class_exists($class)) {
-                    $instance = (new $class);
+                    if (class_exists($class)) {
+                        $instance = (new $class);
 
-                    if ($instance instanceof GatewayFoundation) {
-                        $gateways[$instance->getId()] = $class;
+                        if ($instance instanceof GatewayFoundation) {
+                            $gateways[$instance->getId()] = $class;
+                        }
                     }
                 }
             }
