@@ -51,7 +51,7 @@ class SetupGatewayCommand extends Command
 
         $gateway = (new $gateways[$selectedGateway]);
 
-        $gatewaysTable = config('larapay.tables.gateways', 'larapay_gateways');
+        $gatewaysTable = config('larapay.gateways-table', 'gateways');
 
         $alias = text(
             label: 'Enter the alias for the gateway',

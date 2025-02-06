@@ -24,7 +24,7 @@ return new class extends Migration
             $table->id();
             $table->string('token')->unique();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('gateway_id')->nullable()->references('id')->on(config('larapay.tables.gateways', 'larapay_gateways'))->onDelete('set null');
+            $table->foreignId('gateway_id')->nullable()->references('id')->on('gateways')->onDelete('set null');
             $table->string('transaction_id')->nullable();
             $table->string('tag')->default('application');
             $table->string('status')->default('unpaid');
@@ -44,7 +44,7 @@ return new class extends Migration
             $table->id();
             $table->string('token')->unique();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('gateway_id')->nullable()->references('id')->on(config('larapay.tables.gateways', 'larapay_gateways'))->onDelete('set null');
+            $table->foreignId('gateway_id')->nullable()->references('id')->on('gateways')->onDelete('set null');
             $table->string('subscription_id')->nullable();
             $table->string('tag')->default('application');
             $table->string('status')->default('inactive');
