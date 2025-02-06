@@ -30,7 +30,7 @@ Laravel Pay is a lightweight package for Laravel that allows you to easily integ
 To install the package, use Composer:
 
 ```bash
-composer require laravelpay/foundation
+composer require laravelpay/foundation dev-main
 ```
 
 ## Installing Gateways
@@ -185,8 +185,6 @@ Route::get('/plans/basic/subscribe', function () {
     return $subscription->subscribeWith('paypal');
 }
 ```
-
-This data can be retrieved using `$payment->data` or to get specific keys `$payment->data('key')`
 
 ## Support
 
