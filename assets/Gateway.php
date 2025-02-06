@@ -12,6 +12,7 @@ class Gateway extends Model
     protected $table = 'gateways';
 
     protected $fillable = [
+        'display_name',
         'alias',
         'identifier',
         'type',

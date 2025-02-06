@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('gateways', function (Blueprint $table) {
             $table->id();
+            $table->string('display_name')->nullable();
             $table->string('tag')->default('application');
             $table->string('alias')->unique();
             $table->string('identifier');
