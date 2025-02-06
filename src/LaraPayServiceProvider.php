@@ -12,6 +12,13 @@ class LaraPayServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+        $this->publishes([
+            __DIR__.'/../../assets/2025_1_29_000000_create_larapay_tables.php' => database_path('migrations/2025_1_29_000000_create_larapay_tables.php'),
+            __DIR__.'/../../assets/Gateway.php' => app_path('Models/Gateway.php'),
+            __DIR__.'/../../assets/Payment.php' => app_path('Models/Payment.php'),
+            __DIR__.'/../../assets/Subscription.php' => app_path('Models/Subscription.php'),
+        ], 'larapay');
+
         $this->commands([
             SetupGatewayCommand::class,
             InstallGatewayCommand::class,

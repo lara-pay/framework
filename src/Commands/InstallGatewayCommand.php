@@ -5,9 +5,10 @@ namespace LaraPay\Framework\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use ZipArchive;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
+use ZipArchive;
+
 use function Laravel\Prompts\{select, spin, info};
 
 class InstallGatewayCommand extends Command

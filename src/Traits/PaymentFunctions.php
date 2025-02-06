@@ -1,56 +1,14 @@
 <?php
 
-namespace LaraPay\Framework;
+namespace LaraPay\Framework\Traits;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Gateway;
 use Illuminate\Support\Facades\Cache;
-use App\Models\User;
 use Illuminate\Support\Str;
+use App\Models\User;
 
-class Payment extends Model
+trait PaymentFunctions
 {
-    protected $table;
-
-    protected $fillable = [
-        'token',
-        'user_id',
-        'gateway_id',
-        'tag',
-        'description',
-        'status',
-        'currency',
-        'amount',
-        'transaction_id',
-        'success_url',
-        'cancel_url',
-        'handler',
-        'data',
-        'gateway_data',
-        'paid_at',
-    ];
-
-    protected $casts = [
-        'data' => 'array',
-        'gateway_data' => 'array',
-        'paid_at' => 'datetime',
-    ];
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-
-        $this->table = config('larapay.tables.payments', 'larapay_payments');
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($payment) {
-            $payment->token = Str::random(20);
-        });
-    }
-
     public function getSuccessUrlAttribute($value)
     {
         return $value ?: config('larapay.success_url', url('/'));
@@ -88,7 +46,8 @@ class Payment extends Model
             'payment_token' => $this->token,
         ]);
 
-        return route('larapay.callback', $routeParams);    }
+        return route('larapay.callback', $routeParams);
+    }
 
     public function user()
     {

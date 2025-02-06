@@ -1,59 +1,14 @@
 <?php
 
-namespace LaraPay\Framework;
+namespace LaraPay\Framework\Traits;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Models\Gateway;
 
-class Subscription extends Model
+trait SubscriptionFunctions
 {
-    protected $table;
-
-    protected $fillable = [
-        'token',
-        'user_id',
-        'gateway_id',
-        'subscription_id',
-        'tag',
-        'status',
-        'name',
-        'currency',
-        'amount',
-        'frequency',
-        'grace_period',
-        'success_url',
-        'cancel_url',
-        'handler',
-        'data',
-        'gateway_data',
-        'paid_at',
-        'expires_at',
-    ];
-
-    protected $casts = [
-        'data' => 'array',
-        'gateway_data' => 'array',
-        'paid_at' => 'datetime',
-        'expires_at' => 'datetime',
-    ];
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-
-        $this->table = config('larapay.tables.subscriptions', 'larapay_subscriptions');
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($subscription) {
-            $subscription->token = Str::random(20);
-        });
-    }
-
     public function getSuccessUrlAttribute($value)
     {
         return $value ?: config('larapay.success_url', url('/'));

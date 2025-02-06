@@ -1,37 +1,14 @@
 <?php
 
-namespace LaraPay\Framework;
+namespace LaraPay\Framework\Traits;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use LaraPay\Framework\Interfaces\GatewayFoundation;
 use Illuminate\Http\Request;
+use App\Models\Payment;
 
-class Gateway extends Model
+trait GatewayFunctions
 {
-    protected $table;
-
-    protected $fillable = [
-        'alias',
-        'identifier',
-        'type',
-        'namespace',
-        'config',
-        'is_active',
-        'tag',
-    ];
-
-    protected $casts = [
-        'is_active' => 'boolean',
-    ];
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-
-        $this->table = config('larapay.tables.gateways', 'larapay_gateways');
-    }
-
     public function payments()
     {
         return $this->hasMany(Payment::class, 'gateway_id');
@@ -150,5 +127,11 @@ class Gateway extends Model
         }
 
         return $this->config[$key] ?? $default;
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('alias', 'like', "%$search%")
+            ->orWhere('identifier', 'like', "%$search%");
     }
 }

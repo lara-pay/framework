@@ -3,7 +3,7 @@
 namespace LaraPay\Framework\Commands;
 
 use Illuminate\Console\Command;
-use LaraPay\Framework\Gateway;
+use App\Models\Gateway;
 
 class ListGatewayCommand extends Command
 {

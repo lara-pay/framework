@@ -8,19 +8,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create(config('larapay.tables.gateways', 'larapay_gateways'), function (Blueprint $table) {
+        Schema::create('gateways', function (Blueprint $table) {
             $table->id();
             $table->string('tag')->default('application');
             $table->string('alias')->unique();
             $table->string('identifier');
             $table->string('namespace');
-            $table->enum('type', ['single', 'subscription'])->default('subscription');
+            $table->enum('type', ['single', 'subscription'])->default('single');
             $table->text('config')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
 
-        Schema::create(config('larapay.tables.payments', 'larapay_payments'), function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('token')->unique();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
@@ -40,7 +40,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create(config('larapay.tables.subscriptions', 'larapay_subscriptions'), function (Blueprint $table) {
+        Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->string('token')->unique();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
@@ -66,8 +66,8 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists(config('larapay.tables.gateways', 'larapay_gateways'));
-        Schema::dropIfExists(config('larapay.tables.payments', 'larapay_payments'));
-        Schema::dropIfExists(config('larapay.tables.subscriptions', 'larapay_subscriptions'));
+        Schema::dropIfExists('gateways');
+        Schema::dropIfExists('payments');
+        Schema::dropIfExists('subscriptions');
     }
 };
